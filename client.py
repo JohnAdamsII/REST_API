@@ -4,17 +4,15 @@ BASE_URL = "http://127.0.0.1:5000/"
 PUT_API_PATH = "/video/1"
 GET_API_PATH = "/video/1"
 
-
-
 # PUT request
-# response = requests.put(BASE_URL + PUT_API_PATH, {"likes": 10, "name": "my video", "views": 1000})
-# print(f'{response.request=} {response.url=} {response.status_code=} {response.reason=}')
-# print(f'{response.json()=}')
+response = requests.put(BASE_URL + PUT_API_PATH, {"likes": 10, "name": "my video", "views": 1000})
+print(f'{response.request=} {response.url=} {response.status_code=} {response.reason=}')
+print(f'{response.json()=}')
 
-# input()
+input()
 
 # GET request
 response = requests.get(BASE_URL + GET_API_PATH)
 print(f'{response.request=} {response.url=} {response.status_code=} {response.reason=}')
 print(f'{response.json()=}')
-#print(response.json().get('gender'))
+#print(response.json().get('KEY_NAME'))
