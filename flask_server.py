@@ -1,20 +1,34 @@
 from flask import Flask
-from flask_restful import Api, Resource
+from flask_restful import Api, Resource, reqparse, abort
 
 app = Flask(__name__)
 api = Api(app)
 
-user_data = {"Henry" : {"age": 99, "gender": "gay"},
-"John": {"age": 70, "gender": "straight"}}
+video_put_args = reqparse.RequestParser()
+video_put_args.add_argument("name", type=str, help="Name of the video is required",required=True)
+video_put_args.add_argument("views", type=int, help="number of views of the video as a int",required=True)
+video_put_args.add_argument("likes", type=int, help="number of likes of the video as a int",required=True)
 
-class REST_API(Resource):
-    def get(self, name: str):
-        return user_data[name] #must be JSON serializable
+videos = {}
+
+def abort_if_video_id_doesnt_exist(video_id):
+    if video_id not in videos:
+        abort(404,message="Video is is not valid...")
+
+class Youtube_REST_API(Resource):
+    def get(self, video_id: str): #GET = READ data
+        abort_if_video_id_doesnt_exist(video_id)
+        return videos[video_id] #must be JSON serializable
+
+    def put(self, video_id: str): #PUT = Update data
+        args = video_put_args.parse_args()
+        videos[video_id]= args
+        return videos[video_id], 201
     
-    def post(self):
-        return {"data" : "you did a POST request"}
+    def delete(self, video_id):
+        pass
 
-api.add_resource(REST_API,"/api/<string:name>")
+api.add_resource(Youtube_REST_API,"/video/<int:video_id>")
         
 if __name__ == "__main__":
     app.run(debug=True)
