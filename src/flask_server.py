@@ -16,7 +16,7 @@ class VideoModel(db.Model):
     likes = db.Column(db.Integer,nullable=False)
 
     def __repr__(self) -> str:
-        return f'{name=} {response.url=} {views=} {likes=}'
+        return f'{self.name=} {self.response.url=} {self.views=} {self.likes=}'
 
 # db.create_all() #only needs to happen once or will be deleted
 
